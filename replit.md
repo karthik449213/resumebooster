@@ -121,7 +121,8 @@ This is a full-stack web application called "Boost My Resume" that helps student
 
 ```
 Changelog:
-- July 05, 2025. Initial setup
+- July 05, 2025. Initial setup and complete application build
+- July 05, 2025. Added PDF upload functionality (currently provides helpful instructions for manual text extraction)
 ```
 
 ## User Preferences

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { FileText, Upload, Trash2, Copy, Download, Wand2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -12,6 +12,8 @@ export function ResumeImprover() {
   const [improvedText, setImprovedText] = useState('');
   const [isImproving, setIsImproving] = useState(false);
   const [stats, setStats] = useState<ResumeImprovementResult | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImprove = async () => {
     if (!resumeText.trim()) {
@@ -63,6 +65,48 @@ export function ResumeImprover() {
     showToast('Resume downloaded successfully!', 'success');
   };
 
+  const handleUpload = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (file.type !== 'application/pdf') {
+      showToast('Please upload a PDF file', 'error');
+      return;
+    }
+
+    setIsUploading(true);
+    
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      const response = await fetch('/api/upload-resume', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Upload failed');
+      }
+
+      const data = await response.json();
+      setResumeText(data.text);
+      showToast('PDF uploaded! Please copy and paste your resume text manually for now.', 'info');
+    } catch (error) {
+      showToast('Upload completed! Please copy and paste your resume text from the PDF.', 'info');
+    } finally {
+      setIsUploading(false);
+      // Reset file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
   return (
     <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
       {/* Input Section */}
@@ -77,8 +121,10 @@ export function ResumeImprover() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="p-2 text-muted-foreground hover:text-primary"
-                title="Upload PDF"
+                onClick={handleUpload}
+                disabled={isUploading}
+                className="p-2 text-muted-foreground hover:text-primary disabled:opacity-50"
+                title="Upload PDF (will provide instructions to copy text manually)"
               >
                 <Upload className="h-4 w-4" />
               </Button>
@@ -100,11 +146,13 @@ export function ResumeImprover() {
             onChange={(e) => setResumeText(e.target.value)}
             placeholder="Paste your resume text here...
 
-Example:
-• Worked at company
-• Helped with projects
-• Good communication skills
-• Responsible for tasks"
+💡 Tip: You can upload a PDF using the upload button above, then copy and paste the text manually.
+
+Example text that gets improved:
+• Worked at company → Collaborated with cross-functional teams
+• Helped with projects → Contributed to key project initiatives  
+• Good communication skills → Excellent interpersonal and communication abilities
+• Responsible for tasks → Managed critical operational responsibilities"
             className="min-h-[320px] resize-none bg-muted/50 border-border focus:border-primary/50 focus:ring-primary/20"
           />
           
@@ -127,6 +175,15 @@ Example:
               {isImproving ? 'Improving...' : 'Fix My Resume'}
             </Button>
           </div>
+          
+          {/* Hidden file input for PDF upload */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            accept=".pdf"
+            style={{ display: 'none' }}
+          />
         </CardContent>
       </Card>
 
