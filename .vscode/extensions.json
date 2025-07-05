@@ -1,0 +1,17 @@
+{
+  "recommendations": [
+    "bradlc.vscode-tailwindcss",
+    "ms-vscode.vscode-typescript-next",
+    "esbenp.prettier-vscode",
+    "ms-vscode.vscode-eslint",
+    "ms-playwright.playwright",
+    "formulahendry.auto-rename-tag",
+    "christian-kohler.path-intellisense",
+    "ms-vscode.vscode-json",
+    "PKief.material-icon-theme",
+    "GitHub.copilot",
+    "usernamehw.errorlens",
+    "streetsidesoftware.code-spell-checker",
+    "ms-vscode.live-server"
+  ]
+}

@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: boost-my-resume
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+    # Optional: if you want to use PostgreSQL
+    # envVars:
+    #   - key: DATABASE_URL
+    #     fromDatabase:
+    #       name: boost-resume-db
+    #       property: connectionString
+
+# Optional: PostgreSQL database
+# databases:
+#   - name: boost-resume-db
+#     databaseName: boost_resume
+#     user: boost_user
