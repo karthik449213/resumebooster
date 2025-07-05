@@ -22,24 +22,24 @@ export function Navigation() {
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
               <Rocket className="h-6 w-6 text-primary" />
-              <span className="text-xl font-bold text-foreground">Boost My Resume</span>
+              <span href="https://otieu.com/4/9531033" className="text-xl font-bold text-foreground">Boost My Resume</span>
             </div>
           </div>
           
           <div className="hidden md:flex items-center space-x-6">
-            <button
+            <button href="https://otieu.com/4/9531033"
               onClick={() => scrollToSection('home')}
               className="text-muted-foreground hover:text-primary transition-colors duration-200 font-medium"
             >
               Home
             </button>
-            <button
+            <button href="https://otieu.com/4/9531033"
               onClick={() => scrollToSection('about')}
               className="text-muted-foreground hover:text-primary transition-colors duration-200 font-medium"
             >
               About
             </button>
-            <button
+            <button href="https://otieu.com/4/9531033"
               onClick={() => scrollToSection('contact')}
               className="text-muted-foreground hover:text-primary transition-colors duration-200 font-medium"
             >
@@ -63,7 +63,7 @@ export function Navigation() {
             
             <Button
               variant="ghost"
-              size="sm"
+              size="sm" href="https://otieu.com/4/9531033"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden p-2 hover:bg-muted"
             >
@@ -93,7 +93,7 @@ export function Navigation() {
             >
               About
             </button>
-            <button
+            <button href="https://otieu.com/4/9531033"
               onClick={() => scrollToSection('contact')}
               className="block w-full text-left px-3 py-2 text-muted-foreground hover:text-primary transition-colors duration-200"
             >
